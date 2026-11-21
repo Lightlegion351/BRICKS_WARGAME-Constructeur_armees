@@ -150,7 +150,7 @@ button.addp{width:100%;aspect-ratio:3/4;display:grid;place-content:center;gap:4p
 .art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .up{position:absolute;right:36px;bottom:10px;z-index:1;display:flex;gap:6px}
 .body{padding:14px 18px 20px;display:grid;gap:12px}
-.tools{display:flex;align-items:flex-start;gap:8px}.cdxb{height:44px;font-weight:700}
+.tools{display:flex;align-items:flex-start;gap:8px}.cdxb{height:44px;font-weight:700}.cdxb{display:inline-flex;align-items:center;gap:6px}.keyb{padding:0 12px}.keyb.on{color:var(--gold);border-color:var(--gold)}.rc.lk{opacity:.6}.rc .lki{position:absolute;top:4px;right:4px;display:grid;opacity:.9}.plk{position:absolute;top:4px;right:30px;z-index:3;color:#fff;background:rgba(0,0,0,.6);border-radius:6px;padding:3px;display:grid;pointer-events:none}.robar{display:flex;gap:8px;align-items:center;padding:8px 10px;margin:0 0 8px;border:1px dashed var(--gold);border-radius:8px;color:var(--gold);font:600 12px/1.3 system-ui,sans-serif;background:rgba(0,0,0,.45)}.cw.ro .up{display:none!important}.cdxlk{margin:10px 0 0}.cdxlk .btn{margin-left:auto;white-space:nowrap}.kmsg{margin:8px 0 0;font-size:13px;min-height:1.2em;color:#e5736f}
 .cdx{z-index:60;align-items:flex-start;justify-content:center}.cdxp{width:min(1100px,100%);background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px 20px;box-shadow:0 18px 50px rgba(0,0,0,.45);display:grid;gap:10px}
 .cdxp .pt{display:flex;justify-content:space-between;align-items:center}.cdxp .pt .x{position:static}
 .cdxh{margin:10px 0 0;font:700 15px/1.2 system-ui;color:var(--ink)}
@@ -221,6 +221,7 @@ button.addp{width:100%;aspect-ratio:3/4;display:grid;place-content:center;gap:4p
 <header class="top"><div class="tl">
   <div><h1 id="h1"></h1><p class="ver">BRICKS WARGAME© version 1.8.1</p><p class="fan" id="ver2"></p><p class="fan" id="fan"></p><p id="intro"></p></div>
   <div class="tools"><div class="dd cdxdd" id="cdxdd"><button class="btn cdxb" id="cdxbtn" type="button" aria-haspopup="true" aria-expanded="false"></button><div class="ddlist" id="cdxlist" hidden></div></div>
+  <button class="btn cdxb keyb" id="keybtn" type="button"></button>
   <div class="dd lg" id="lg"><button class="ddbtn" id="lgbtn" aria-haspopup="true" aria-expanded="false"></button><div class="ddlist" id="lglist" hidden></div></div></div>
 </div></header>
 <main class="wrap lay">
@@ -247,11 +248,12 @@ button.addp{width:100%;aspect-ratio:3/4;display:grid;place-content:center;gap:4p
   <div class="binder" id="ulist"></div>
   </div>
 </main>
-<div class="appver" id="appver"><div>v0.20.12</div><div id="credit"></div></div>
+<div class="appver" id="appver"><div>v0.21</div><div id="credit"></div></div>
 <div class="ov" id="ov" hidden></div>
 <div class="pv" id="pv" hidden></div>
 <div class="ov cdx" id="cdx" hidden></div>
 <div class="pv" id="dlg" hidden style="z-index:80"></div>
+<div class="pv" id="keydlg" hidden style="z-index:85"></div>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
 const $=s=>document.querySelector(s);
@@ -273,7 +275,7 @@ search:['Rechercher une unité','Search for a unit'],filters:['Filtres : nom, ty
 units:['Unités','Units'],addUnit:['Ajouter une unité','Add a unit'],unitName:['Nom de l’unité','Unit name'],mkUnit:['Créer l’unité','Create the unit'],
 rmUnit:['Supprimer cette unité','Delete this unit'],reorg:['Réorganiser','Reorder'],reorgOn:['Mode réorganisation activé : glisse les unités. Recliquer pour quitter.','Reorder mode on: drag units. Click again to exit.'],openCard:['Ouvrir la carte de','Open the card of'],nomatch:['Aucune unité ne correspond.','No unit matches.'],noname:['Sans nom','Unnamed'],
 searchIn:['Chercher dans','Search in'],fName:['Nom','Name'],fType:['Type','Type'],fProf:['Profil','Profile'],
-gab:['Gabarit','Size class'],cat:['Catégorie','Category'],lLoad:['Méga-équipements','Mega-equipment'],eqNL:['Méga-équipement','Mega-equipment'],addMeq:['Ajouter un méga-équipement','Add mega-equipment'],rmMeq:['Retirer','Remove'],weapons:['Armes','Weapons'],noLoads:['Aucune charge disponible pour l’instant','No loads available yet'],wip:['EN COURS DE RÉFLEXION','WORK IN PROGRESS'],noneEq:['— Aucun —','— None —'],anyVar:['tous','any'],cdx:['Codex','Codex'],filtT:['Filtrage d’unités','Unit filtering'],ver2:['(mégafigurine version 1.7)','(megafig version 1.7)'],credit:['Projet réalisé avec l’aide de Claude (Anthropic)','Project built with the help of Claude (Anthropic)'],cdxT:['Codex des profils','Profile codex'],cdxEqT:['Codex des équipements','Equipment codex'],cdxEqS:['Rechercher un équipement…','Search an equipment…'],cdxEqN:['Aucun équipement ne correspond.','No equipment matches.'],cdxWc:['Une carte est disponible : cliquez sur le méga-équipement pour l’afficher.','A card is available: click the mega-equipment to display it.'],cdxEqH:['Équipements','Equipment'],cdxS:['Rechercher un profil…','Search a profile…'],cdxNo:['Aucun profil ne correspond.','No profile matches.'],cdxTh:['Troupes','Troops'],cdxHe:['Héros','Heroes'],cdxMegaCat:['Catégories de mégafigurines','Megafig categories'],fEq:['Équipement','Equipment'],allEq:['Tous','All'],delArmyT:['Supprimer l’armée','Delete the army'],delArmyQ:['Cette armée contient des unités. Que faire d’elles ?','This army contains units. What should happen to them?'],delKeep:['Supprimer l’armée seulement (unités passées en « sans armée »)','Delete the army only (units become “no army”)'],delAll:['Supprimer l’armée et ses unités','Delete the army and its units'],cancel:['Annuler','Cancel'],allTypes:['Tous les types','All types'],allProfiles:['Tous les profils','All profiles'],resetF:['Réinitialiser les filtres','Reset filters'],
+keyT:['Clé de licence','License key'],keyD:['Entre ta clé pour débloquer les fonctions réservées.','Enter your key to unlock the reserved features.'],keyLock:['Cette fonction est réservée. Entre une clé valide pour la débloquer.','This feature is reserved. Enter a valid key to unlock it.'],keyOk:['Valider','Confirm'],keyCdx:['Seul le contenu gratuit est affiché. Entre une clé pour tout voir.','Only free content is shown. Enter a key to see everything.'],keyBtnT:['Entrer une clé','Enter a key'],keyItem:['Contenu réservé : entre une clé valide pour le débloquer.','Reserved content: enter a valid key to unlock it.'],keyUnit:['Cette unité contient du contenu réservé : elle n’est pas modifiable sans clé.','This unit contains reserved content: it cannot be edited without a key.'],keyBad:['Clé invalide.','Invalid key.'],keyFmt:['La clé doit contenir 16 caractères (4 groupes de 4).','The key must contain 16 characters (4 groups of 4).'],keyOn:['Clé active','Key active'],keyFeat:['Fonctions débloquées : ','Unlocked features: '],keyRm:['Retirer la clé','Remove key'],f_codex:['Codex','Codex'],f_all:['toutes','all'],gab:['Gabarit','Size class'],cat:['Catégorie','Category'],lLoad:['Méga-équipements','Mega-equipment'],eqNL:['Méga-équipement','Mega-equipment'],addMeq:['Ajouter un méga-équipement','Add mega-equipment'],rmMeq:['Retirer','Remove'],weapons:['Armes','Weapons'],noLoads:['Aucune charge disponible pour l’instant','No loads available yet'],wip:['EN COURS DE RÉFLEXION','WORK IN PROGRESS'],noneEq:['— Aucun —','— None —'],anyVar:['tous','any'],cdx:['Codex','Codex'],filtT:['Filtrage d’unités','Unit filtering'],ver2:['(mégafigurine version 1.7)','(megafig version 1.7)'],credit:['Projet réalisé avec l’aide de Claude (Anthropic)','Project built with the help of Claude (Anthropic)'],cdxT:['Codex des profils','Profile codex'],cdxEqT:['Codex des équipements','Equipment codex'],cdxEqS:['Rechercher un équipement…','Search an equipment…'],cdxEqN:['Aucun équipement ne correspond.','No equipment matches.'],cdxWc:['Une carte est disponible : cliquez sur le méga-équipement pour l’afficher.','A card is available: click the mega-equipment to display it.'],cdxEqH:['Équipements','Equipment'],cdxS:['Rechercher un profil…','Search a profile…'],cdxNo:['Aucun profil ne correspond.','No profile matches.'],cdxTh:['Troupes','Troops'],cdxHe:['Héros','Heroes'],cdxMegaCat:['Catégories de mégafigurines','Megafig categories'],fEq:['Équipement','Equipment'],allEq:['Tous','All'],delArmyT:['Supprimer l’armée','Delete the army'],delArmyQ:['Cette armée contient des unités. Que faire d’elles ?','This army contains units. What should happen to them?'],delKeep:['Supprimer l’armée seulement (unités passées en « sans armée »)','Delete the army only (units become “no army”)'],delAll:['Supprimer l’armée et ses unités','Delete the army and its units'],cancel:['Annuler','Cancel'],allTypes:['Tous les types','All types'],allProfiles:['Tous les profils','All profiles'],resetF:['Réinitialiser les filtres','Reset filters'],
 perRow:['Par ligne','Per row'],imp:['Importer','Import'],impTitle:['Importer une unité ou une armée (fichier .json)','Import a unit or an army (.json file)'],
 troop:['Troupe','Troop'],hero:['Héros','Hero'],troops:['troupes','troops'],heroes:['héros','heroes'],
 unitCard:['Carte de l’unité','Unit card'],close:['Fermer la carte','Close the card'],closeList:['Fermer la liste','Close the list'],
@@ -465,7 +467,7 @@ document.addEventListener('mouseover',e=>{const t=e.target.closest&&e.target.clo
 document.addEventListener('scroll',placeVbx,true);window.addEventListener('resize',placeVbx);
 function renderCdxEq(){
   const w=norm(cdxQ).split(/\s+/).filter(Boolean);
-  const tabs=[['e',tr('cdxEqH'),EQ.filter(e=>e.only!=='Mega')],['m',tr('lLoad'),EQ.filter(e=>e.only==='Mega')]];
+  const tabs=[['e',tr('cdxEqH'),EQ.filter(e=>e.only!=='Mega'&&(full()||FREE_E.has(e.id)))]];if(full())tabs.push(['m',tr('lLoad'),EQ.filter(e=>e.only==='Mega')]);
   const match=l=>l.filter(e=>w.every(x=>norm(e.n+' '+e.en+' '+(e.v||[]).join(' ')+' '+(e.ve||[]).join(' ')).includes(x)));
   const bar=`<div class="cdxtabs" role="tablist">${tabs.map(([k,t,l])=>`<button type="button" role="tab" class="cdxtab${cdxTab===k?' on':''}" aria-selected="${cdxTab===k}" data-cdxtab="${k}">${esc(t)}${w.length?` <small>${match(l).length}</small>`:''}</button>`).join('')}</div>`;
   const cur=tabs.find(t=>t[0]===cdxTab)||tabs[0],l=match(cur[2]);
@@ -485,7 +487,7 @@ function renderCdx(){
   const sections=[['med','Troupe'],['med','Héros'],['mod','Troupe'],['mod','Héros'],['mega','Mega']];
   let body='';
   if(!isEq)sections.forEach(([e,ty])=>{
-    const ps=PROF.filter(p=>p.era===e&&p.type===ty&&w.every(x=>norm(p.name+' '+p.en+' '+era(e)+' '+(ty==='Troupe'?tr('cdxTh'):ty==='Héros'?tr('cdxHe'):tr('cdxMegaCat'))).includes(x)));
+    const ps=PROF.filter(p=>(full()||profFree(p))&&p.era===e&&p.type===ty&&w.every(x=>norm(p.name+' '+p.en+' '+era(e)+' '+(ty==='Troupe'?tr('cdxTh'):ty==='Héros'?tr('cdxHe'):tr('cdxMegaCat'))).includes(x)));
     if(!ps.length)return;
     const t=e==='mega'?tr('mega'):`${era(e)} — ${ty==='Troupe'?tr('cdxTh'):tr('cdxHe')}`;
     body+=`<h3 class="cdxh">${esc(t)}</h3><div class="cdxg">${ps.map(cdxCard).join('')}</div>`;
@@ -497,7 +499,7 @@ function renderCdx(){
   const view=vp?`<div class="cdxv" data-cdxv><div class="cw cdxw"><article class="ucard cdxa" role="dialog" aria-modal="true" aria-label="${esc(pn(vp))}"><button class="x" data-cdxvclose aria-label="${tr('close')}">${XI}</button>${vp.era==='mega'?`<div class="cdxf tapecard"><span>${tr('wip')}</span></div>`:`<img class="cdxf" src="${SEC[vp.name]}" alt="${esc(pn(vp))}">`}</article></div></div>`:'';
   const view2=we?`<div class="cdxv" data-cdxv><div class="cw cdxw"><article class="ucard cdxa" role="dialog" aria-modal="true" aria-label="${esc(en_(we))}"><button class="x" data-cdxvclose aria-label="${tr('close')}">${XI}</button><img class="cdxf wzf" src="${WCARD[we.id]}" alt="${esc(en_(we))}"></article></div></div>`:'';
   const keep=o.querySelector('#cdxq');const had=keep&&document.activeElement===keep;
-  o.innerHTML=`<div class="cdxp" role="dialog" aria-modal="true" aria-label="${tr(isEq?'cdxEqT':'cdxT')}"><div class="pt"><b>${tr(isEq?'cdxEqT':'cdxT')}</b><button class="x" data-cdxclose aria-label="${tr('close')}">${XI}</button></div><input class="q" id="cdxq" type="search" autocomplete="off" placeholder="${tr(isEq?'cdxEqS':'cdxS')}" value="${esc(cdxQ)}" aria-label="${tr(isEq?'cdxEqS':'cdxS')}">${body||`<p class="nomatch">${tr(isEq?'cdxEqN':'cdxNo')}</p>`}</div>${view}${view2}`;
+  o.innerHTML=`<div class="cdxp" role="dialog" aria-modal="true" aria-label="${tr(isEq?'cdxEqT':'cdxT')}"><div class="pt"><b>${tr(isEq?'cdxEqT':'cdxT')}</b><button class="x" data-cdxclose aria-label="${tr('close')}">${XI}</button></div><input class="q" id="cdxq" type="search" autocomplete="off" placeholder="${tr(isEq?'cdxEqS':'cdxS')}" value="${esc(cdxQ)}" aria-label="${tr(isEq?'cdxEqS':'cdxS')}">${full()?'':`<div class="robar cdxlk">${LOCKI}<span>${tr('keyCdx')}</span><button type="button" class="btn" data-keyopen>${tr('keyBtnT')}</button></div>`}${body||`<p class="nomatch">${tr(isEq?'cdxEqN':'cdxNo')}</p>`}</div>${view}${view2}`;
   placeVbx();
   if(had||!keep){const i=$('#cdxq');i.focus();i.setSelectionRange(i.value.length,i.value.length);}
 }
@@ -550,7 +552,7 @@ function eqPic(s){
 }
 function pocket(u){
   const A=arm(u),hc=u.t==='Mega'?GAB[u.g][4]:hcol(u),im=custom[u.id];
-  return `<div class="pk" data-id="${u.id}" style="--a:${A.a};--hc:${hc}"><button class="pkb" data-u="${u.id}" aria-label="${tr('openCard')} ${esc(u.n)}"><span class="pim" style="background:${im?bg(A):'rgba(0,0,0,.25)'}">${im?`<img src="${im}" alt="">`:mini(u)}${chefIco(u)}</span><span class="pn${u.t==='Héros'?' hero':u.t==='Mega'?' mega':''}">${esc(u.n||tr('noname'))}</span>${u.t==='Mega'?`<span class="eqb eqp mg" aria-hidden="true">${u.eq.map(s=>eqPic(s)).join('')}</span>`:`<span class="eqb eqp" aria-hidden="true">${u.eq.map(s=>eqPic(s)).join('')}</span>`}<small><img class="ti" src="${TI(u.t)}" alt="${tt(u.t)}" title="${tt(u.t)}">${u.t==='Mega'&&GABI[u.g||'moyen']?`<img class="ti" src="${GABI[u.g||'moyen']}" alt="${GAB[u.g||'moyen'][lang==='en'?1:0]}" title="${tr('gab')} : ${GAB[u.g||'moyen'][lang==='en'?1:0]}">`:''}${PICON[prof(u).name]?`<img class="ti" src="${PICON[prof(u).name]}" alt="${pn(prof(u))}" title="${pn(prof(u))}">`:''}</small></button><button class="minus pdel" data-udel="${u.id}" title="${tr('rmUnit')}" aria-label="${tr('rmUnit')} (${esc(u.n)})">${MI}</button></div>`;
+  return `<div class="pk" data-id="${u.id}" style="--a:${A.a};--hc:${hc}">${roUnit(u)?`<span class="plk" title="${tr('keyUnit')}">${LOCKI}</span>`:''}<button class="pkb" data-u="${u.id}" aria-label="${tr('openCard')} ${esc(u.n)}"><span class="pim" style="background:${im?bg(A):'rgba(0,0,0,.25)'}">${im?`<img src="${im}" alt="">`:mini(u)}${chefIco(u)}</span><span class="pn${u.t==='Héros'?' hero':u.t==='Mega'?' mega':''}">${esc(u.n||tr('noname'))}</span>${u.t==='Mega'?`<span class="eqb eqp mg" aria-hidden="true">${u.eq.map(s=>eqPic(s)).join('')}</span>`:`<span class="eqb eqp" aria-hidden="true">${u.eq.map(s=>eqPic(s)).join('')}</span>`}<small><img class="ti" src="${TI(u.t)}" alt="${tt(u.t)}" title="${tt(u.t)}">${u.t==='Mega'&&GABI[u.g||'moyen']?`<img class="ti" src="${GABI[u.g||'moyen']}" alt="${GAB[u.g||'moyen'][lang==='en'?1:0]}" title="${tr('gab')} : ${GAB[u.g||'moyen'][lang==='en'?1:0]}">`:''}${PICON[prof(u).name]?`<img class="ti" src="${PICON[prof(u).name]}" alt="${pn(prof(u))}" title="${pn(prof(u))}">`:''}</small></button><button class="minus pdel" data-udel="${u.id}" title="${tr('rmUnit')}" aria-label="${tr('rmUnit')} (${esc(u.n)})">${MI}</button></div>`;
 }
 function endSide(){if(!fopen&&pwFix){pwFix=0;renderU();}}
 function fitPN(){
@@ -581,7 +583,7 @@ function eqBox(u,i){
 function card(focus){
   const o=$('#ov'),u=cur();
   if(!u){o.hidden=true;o.innerHTML='';return;}
-  const A=arm(u),R=RULE[u.t],im=custom[u.id],hc=hcol(u),sc=SEC[prof(u).name];
+  const ro=roUnit(u),A=arm(u),R=RULE[u.t],im=custom[u.id],hc=hcol(u),sc=SEC[prof(u).name];
   const res=u.t==='Mega'?GAB[u.g][2]+(u.eq.includes('m_bouclier')?1:0):BASE_R+(u.eq.includes('bouclier')?1:0);
   const mod=prof(u).era==='mod',BGU=FOND_MEGA,fb=`background:#6f7274 url(${BGU}) center/calc(var(--W) * 3.1) auto`;
   const anyChef=units.some(x=>x.chef&&x.army===u.army&&x!==u),chefBtn=canChef(u)&&u.army&&u.army!=='none'&&(u.chef||!anyChef)?`<button type="button" class="chef" data-chef aria-pressed="${!!u.chef}" aria-label="${u.chef?tr('chefUnset'):tr('chefSet')}"><img src="${u.chef?ICON.chef:ICON.chefoff}" alt=""></button>`:'';
@@ -589,13 +591,14 @@ function card(focus){
   const wc=wps.map((e,i)=>`<button type="button" class="wpw${wPin===e.id?' pin':''}${i===wps.length-1?' last':''}" data-wpn="${e.id}" style="--i:${i}" aria-label="${esc(en_(e))}"><span class="wp"><img src="${WCARD[e.id]}" alt="${esc(en_(e))}"></span></button>`).join('');
   const cc=hasC?`<div class="compw${compPin?' pin':''}"><aside class="comp${mod?' mod':''}" style="--a:${A.a};${fb}" aria-label="${tr('compCard')}"><div class="chd">${tr('comp')}</div><div class="cart" style="background:${ci?bg(A):'radial-gradient(ellipse closest-side,rgba(0,0,0,.25),rgba(0,0,0,.5))'+`,#6f7274 url(${BGU}) center/calc(var(--W) * 3.1) auto`}">${ci?`<img src="${ci}" alt="">`:''}<div class="up" hidden><label class="btn">${ci?tr('chImg'):tr('addImg')}<input type="file" accept="image/*" data-cimg hidden></label>${ci?`<button class="btn" data-creset>${tr('rmImg')}</button>`:''}</div>${TRI}</div><div class="cbody"><div><span class="sec">${tr('cType')}</span>${trg('comp',compName(u.comp.t),'#95C703','#000000')}</div><button type="button" class="btn" data-exk>${tr('exCard')}</button><div class="stats"><div class="st"><span>${tr('res')}</span><output>4<img src="${ICON.res}" alt="" aria-hidden="true"></output></div><div class="st"><span>${tr('lifeLbl')}</span><output>1<img src="${ICON.life}" alt="" aria-hidden="true"></output></div></div></div></aside></div>`:'';
   o.hidden=false;
-  o.innerHTML=`<div class="cw${hasC?' hasc':''}${wps.length?' hasw':''}"><article class="ucard${mod?' mod':''}${isM(u)?' wip':''}" role="dialog" aria-modal="true" aria-label="${tr('unitCard')}" style="--a:${A.a};${fb}">
+  o.innerHTML=`<div class="cw${hasC?' hasc':''}${wps.length?' hasw':''}${ro?' ro':''}"><article class="ucard${mod?' mod':''}${isM(u)?' wip':''}" role="dialog" aria-modal="true" aria-label="${tr('unitCard')}" style="--a:${A.a};${fb}">
   ${isM(u)?`<div class="tape" aria-hidden="true"><span>${tr('wip')}</span></div>`:''}
   <button class="x" data-close aria-label="${tr('close')}">${XI}</button>
-  <div class="hd" style="background:${u.t==='Mega'?'#00A7BB':hc};color:${tc(u.t==='Mega'?'#00A7BB':hc)}"><input class="nm" data-k="n" value="${esc(u.n)}" maxlength="40" aria-label="${tr('unitName')}"></div>
+  <div class="hd" style="background:${u.t==='Mega'?'#00A7BB':hc};color:${tc(u.t==='Mega'?'#00A7BB':hc)}"><input class="nm" data-k="n" value="${esc(u.n)}" maxlength="40"${ro?' readonly':''} aria-label="${tr('unitName')}"></div>
   <div class="art" style="background:${im?bg(A):'radial-gradient(ellipse closest-side,rgba(0,0,0,.25),rgba(0,0,0,.5))'+`,#6f7274 url(${BGU}) center/calc(var(--W) * 3.1) auto`}">${im?`<img src="${im}" alt="${esc(u.n)}">`:big(u)}
     <div class="up" hidden><label class="btn">${im?tr('chImg'):tr('addImg')}<input type="file" accept="image/*" hidden></label>${im?`<button class="btn" data-reset>${tr('rmImg')}</button>`:''}</div>${TRI}</div>
   <div class="body">
+    ${ro?`<div class="robar">${LOCKI}<span>${tr('keyUnit')}</span></div>`:''}
     <div class="two${isM(u)?' three':''}">
       <div><span class="sec">${tr('fType')}</span>${trg('t',tt(u.t),'var(--panel2)','var(--ink)',TI(u.t))}</div>
       ${isM(u)?`<div><span class="sec">${tr('gab')}</span>${trg('g',gabN(u),GAB[u.g][4],GAB[u.g][5])}</div>`:''}
@@ -609,7 +612,7 @@ function card(focus){
       <div class="st"><span>${tr('elim')}${u.chef?tr('chefB'):''}</span><output>${R.e+(u.chef?1:0)}<img class="el" src="${ICON.elim}" alt="" aria-hidden="true"></output></div>
     </div>
     <div class="exrow"><button type="button" class="btn" data-exu>${tr('exUnit')}</button><button type="button" class="btn" data-exc>${tr('exCard')}</button></div>
-  </div>${isM(u)?`<div class="tape" aria-hidden="true"><span>${tr('wip')}</span></div>`:''}</article>${chefBtn}${cc}${wc}${sc||isM(u)?`<button type="button" class="scw${secPin?' pin':''}" data-sec aria-pressed="${secPin}" aria-label="${tr('secCard')} : ${esc(pn(prof(u)))}">${sc?`<span class="sc" style="background:url(${sc}) center/cover"></span>`:`<span class="sc tapecard"><span>${tr('wip')}</span></span>`}</button>`:''}</div>`;
+  </div>${isM(u)?`<div class="tape" aria-hidden="true"><span>${tr('wip')}</span></div>`:''}</article>${chefBtn}${cc}${wc}${(full()||profFree(prof(u)))&&(sc||isM(u))?`<button type="button" class="scw${secPin?' pin':''}" data-sec aria-pressed="${secPin}" aria-label="${tr('secCard')} : ${esc(pn(prof(u)))}">${sc?`<span class="sc" style="background:url(${sc}) center/cover"></span>`:`<span class="sc tapecard"><span>${tr('wip')}</span></span>`}</button>`:''}</div>`;
   fitName();
   if(focus)$('.x').focus();
 }
@@ -623,18 +626,18 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitName);
 function closeCard(){selId=null;wPin=null;secPin=false;compPin=false;compPin=false;card();}
 // Sélecteur en tableau de rectangles colorés
 function pickData(key,u){
-  if(key==='t')return{title:tr('pType'),cur:u.t,items:['Troupe','Héros','Mega'].map(x=>({val:x,label:tt(x),bg:'var(--panel2)',fg:'var(--ink)',icon:TI(x)}))};
+  if(key==='t')return{title:tr('pType'),cur:u.t,items:['Troupe','Héros','Mega'].map(x=>({val:x,label:tt(x),bg:'var(--panel2)',fg:'var(--ink)',icon:TI(x),lk:!full()&&x!=='Héros'}))};
   if(key==='g')return{title:tr('gab'),cur:u.g,items:Object.keys(GAB).map(k=>({val:k,label:GAB[k][lang==='en'?1:0],bg:GAB[k][4],fg:GAB[k][5]}))};
-  if(key==='p')return{title:isM(u)?tr('cat'):tr('fProf'),cur:u.p,items:PROF.filter(p=>p.type===u.t).map(p=>{const c=hcol({p:p.id});return{val:p.id,label:pn(p),bg:c,fg:tc(c),g:p.era==='mega'?'':era(p.era),icon:PICON[p.name]}})};
+  if(key==='p')return{title:isM(u)?tr('cat'):tr('fProf'),cur:u.p,items:PROF.filter(p=>p.type===u.t).map(p=>{const c=hcol({p:p.id});return{val:p.id,label:pn(p),bg:c,fg:tc(c),g:p.era==='mega'?'':era(p.era),icon:PICON[p.name],lk:!full()&&!profFree(p)}})};
   if(key==='army')return{title:tr('lArmy'),cur:arm(u).id,items:armies.concat([NONE]).map(a=>({val:a.id,label:a.name,bg:a.a,fg:acc(a)}))};
   if(key==='comp')return{title:tr('cType'),cur:u.comp.t,items:['gardien','protecteur'].map(k=>({val:k,label:compName(k),bg:'#95C703',fg:'#000000'}))};
   if(isM(u)){const i=+key.slice(2),used=usedC(u,i),items=[];
     if(i<u.eq.length)items.push({val:'',label:tr('rmMeq'),bg:'rgba(0,0,0,.25)',fg:'var(--mute)',dash:1});
-    EQ.filter(e=>e.only==='Mega').forEach(e=>items.push({val:e.id,label:en_(e),cost:e.cost,bg:e.bg,fg:e.fg,g:e.g==='w'?tr('weapons'):tr('lLoad'),dis:used+e.cost>budget(u)||u.eq.some((s,j)=>j!==i&&s===e.id)||!okM(e,u)}));
+    EQ.filter(e=>e.only==='Mega').forEach(e=>items.push({val:e.id,label:en_(e),cost:e.cost,bg:e.bg,fg:e.fg,g:e.g==='w'?tr('weapons'):tr('lLoad'),lk:!full(),dis:used+e.cost>budget(u)||u.eq.some((s,j)=>j!==i&&s===e.id)||!okM(e,u)}));
     return{title:`${tr('eqNL')} ${i+1}`,cur:u.eq[i]||'',items};}
   const i=+key.slice(2),n=id=>u.eq.filter((s,j)=>j!==i&&s.split(':')[0]===id).length;
   const items=[{val:'',label:tr('empty'),bg:'rgba(0,0,0,.25)',fg:'var(--mute)',dash:1}];
-  EQ.filter(e=>allowed(e,u.t)).forEach(e=>(e.v?e.v.map(v=>[e.id+':'+v,`${en_(e)}, ${vn(e,v)}`]):[[e.id,en_(e)]]).forEach(([val,label])=>items.push({val,label,bg:e.bg,fg:e.fg,star:e.star,dis:n(e.id)>=(e.max||1)||(MG.includes(e.id)&&n('explosifs')+n('sortileges')>=2)})));
+  EQ.filter(e=>allowed(e,u.t)).forEach(e=>(e.v?e.v.map(v=>[e.id+':'+v,`${en_(e)}, ${vn(e,v)}`]):[[e.id,en_(e)]]).forEach(([val,label])=>items.push({val,label,bg:e.bg,fg:e.fg,star:e.star,lk:!full()&&!FREE_E.has(e.id),dis:n(e.id)>=(e.max||1)||(MG.includes(e.id)&&n('explosifs')+n('sortileges')>=2)})));
   return{title:`${isM(u)?tr('eqNL'):tr('eqN')} ${i+1}`,cur:u.eq[i],items};
 }
 
@@ -752,7 +755,7 @@ let tipBtn=null;
 function hideTip(){tipBtn=null;const t=$('#eqtip');if(t)t.hidden=true;}
 function showTip(btn){
   if(!pk||!btn)return hideTip();
-  const it=pk.items[+btn.dataset.pv];if(!it||!it.val)return hideTip();
+  const it=pk.items[+btn.dataset.pv];if(!it||!it.val||(it.lk&&!full()))return hideTip();
   const [id,vr]=String(it.val).split(':'),e0=eqOf(id),html=descOf(id),vi=EQV[id]&&EQV[id][vr||'_'],vtx=vi?varOf(id,vr):'',vnm=vi&&e0&&vr?vn(e0,vr):'',vtitle=!vi?'':(id==='ciblage'||id==='m_visee')?(lang==='en'?'Target marker':'Marqueur cible'):id==='sortileges'?(lang==='en'?capF(vnm)+' marker':'Marqueur '+vnm):capF(vnm);
   if(!html&&!eqIc(id))return hideTip();
   const e=eqOf(id);
@@ -790,7 +793,7 @@ window.addEventListener('resize',centerOnCard);
 function renderPick(){
   const o=$('#pv');
   if(!pk){o.hidden=true;o.innerHTML='';centerOnCard();hideTip();return;}
-  const rc=(it,i)=>`<button type="button" class="rc${it.val===pk.cur?' on':''}${it.dash?' dash':''}" data-pv="${i}" style="background:${it.bg};color:${it.fg}"${it.dis?' disabled':''}>${it.star?STAR:''}${esc(it.label)}${it.cost?`<span class="cbs" aria-label="${it.cost}">${`<img src="${CUBE}" alt="">`.repeat(it.cost)}</span>`:''}${it.icon?`<img class="ti" src="${it.icon}" alt="">`:''}</button>`;
+  const rc=(it,i)=>`<button type="button" class="rc${it.val===pk.cur?' on':''}${it.dash?' dash':''}${it.lk?' lk':''}" data-pv="${i}" style="background:${it.bg};color:${it.fg}"${it.dis?' disabled':''}>${it.lk?`<span class="lki">${LOCKI}</span>`:''}${it.star?STAR:''}${esc(it.label)}${it.cost?`<span class="cbs" aria-label="${it.cost}">${`<img src="${CUBE}" alt="">`.repeat(it.cost)}</span>`:''}${it.icon?`<img class="ti" src="${it.icon}" alt="">`:''}</button>`;
   const gs=[...new Set(pk.items.map(i=>i.g||''))];
   o.hidden=false;centerOnCard();
   o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${esc(pk.title)}"><div class="pt"><b>${esc(pk.title)}</b><button class="x" data-pclose aria-label="${tr('closeList')}">${XI}</button></div>${gs.map(g=>`${g?`<span class="sec">${esc(g)}</span>`:''}<div class="pg">${pk.items.map((it,i)=>(it.g||'')===g?rc(it,i):'').join('')}</div>`).join('')}</div>`;
@@ -806,8 +809,9 @@ function closePick(){
 }
 function choose(i){
   const u=cur(),it=pk&&pk.items[i];if(!u||!it||it.dis)return;
+  if(it.lk&&!full()){keyOpenDlg('item');return;}
   const key=pk.key;
-  if(key==='t'){if(it.val!==u.t){const e=prof(u).era;u.t=it.val;u.p=(PROF.find(x=>x.type===u.t&&x.era===e)||PROF.find(x=>x.type===u.t)).id;}}
+  if(key==='t'){if(it.val!==u.t){const e=prof(u).era;u.t=it.val;const okp=x=>full()||profFree(x);u.p=(PROF.find(x=>x.type===u.t&&x.era===e&&okp(x))||PROF.find(x=>x.type===u.t&&okp(x))||PROF.find(x=>x.type===u.t&&x.era===e)||PROF.find(x=>x.type===u.t)).id;}}
   else if(key==='g')u.g=it.val;
   else if(key==='p')u.p=it.val;
   else if(key==='army'){u.army=it.val;if(u.chef&&units.some(x=>x!==u&&x.chef&&x.army===u.army))u.chef=false;}
@@ -842,7 +846,7 @@ function delArmy(id,withUnits){
 }
 function createUnit(){
   const n=newUName.trim();if(!n)return;
-  const u={id:'u'+Date.now(),army:armies.some(a=>a.id===filter)?filter:'none',n,t:'Troupe',p:'medT0',eq:['','','']};
+  const u={id:'u'+Date.now(),army:armies.some(a=>a.id===filter)?filter:'none',n,t:full()?'Troupe':'Héros',p:full()?'medT0':'medH1',eq:['','','']};
   fix(u);units.push(u);newUName='';uadding=false;selId=u.id;save();renderDD();renderU();card(true);
 }
 function delUnit(id){
@@ -872,7 +876,7 @@ function exportArmy(id){
 }
 
 // ---- Export PNG d’une carte (SVG foreignObject -> canvas), sans boutons ni menus
-const PNG_HIDE='.x,[data-exu],[data-exc],[data-exk],.exrow,.up,.tri,.eq.add,[data-imgmenu]';
+const PNG_HIDE='.x,[data-exu],[data-exc],[data-exk],.exrow,.up,.tri,.eq.add,[data-imgmenu],.robar';
 async function exportPNG(sel,kind){
   const el=document.querySelector('#ov '+sel),u=cur();if(!el||!u)return;
   const hid=[...el.querySelectorAll(PNG_HIDE)].map(n=>[n,n.style.display]);
@@ -1014,19 +1018,86 @@ ${[0,1,2].map(k=>`<label class="fld"><span>${tr('fEq')} ${k+1}</span><select dat
 <button class="btn" id="freset" type="button">${tr('resetF')}</button>`;
   fpRefresh();
 }
+/* ===== Clé de licence ===== */
+function sha256(ascii){
+  function rr(v,a){return(v>>>a)|(v<<(32-a));}
+  const mp=Math.pow,mw=mp(2,32);let result='',i,j;const words=[],bl=ascii.length*8;
+  let hash=sha256.h=sha256.h||[],k=sha256.k=sha256.k||[],pc=k.length;const isc={};
+  for(let c=2;pc<64;c++){if(!isc[c]){for(i=0;i<313;i+=c)isc[i]=c;hash[pc]=(mp(c,.5)*mw)|0;k[pc++]=(mp(c,1/3)*mw)|0;}}
+  ascii+='\x80';while(ascii.length%64-56)ascii+='\x00';
+  for(i=0;i<ascii.length;i++){j=ascii.charCodeAt(i);words[i>>2]|=j<<((3-i)%4)*8;}
+  words[words.length]=((bl/mw)|0);words[words.length]=bl;
+  for(j=0;j<words.length;){const w=words.slice(j,j+=16),old=hash;hash=hash.slice(0,8);
+    for(i=0;i<64;i++){const w15=w[i-15],w2=w[i-2],a=hash[0],e=hash[4];
+      const t1=hash[7]+(rr(e,6)^rr(e,11)^rr(e,25))+((e&hash[5])^((~e)&hash[6]))+k[i]+(w[i]=(i<16)?w[i]:(w[i-16]+(rr(w15,7)^rr(w15,18)^(w15>>>3))+w[i-7]+(rr(w2,17)^rr(w2,19)^(w2>>>10)))|0);
+      const t2=(rr(a,2)^rr(a,13)^rr(a,22))+((a&hash[1])^(a&hash[2])^(hash[1]&hash[2]));
+      hash=[(t1+t2)|0].concat(hash);hash[4]=(hash[4]+t1)|0;}
+    for(i=0;i<8;i++)hash[i]=(hash[i]+old[i])|0;}
+  for(i=0;i<8;i++)for(j=3;j+1;j--){const b=(hash[i]>>(j*8))&255;result+=((b<16)?0:'')+b.toString(16);}
+  return result;
+}
+const LIC_SALT='BWCA1|';
+/* Liste des clés valides : seules les empreintes sont stockées (aucune clé en clair). Générées par generateur-cles.html */
+const LIC=[{"h": "4c9aa356a9fbb0f6c978a7b0525164340c65685a11ac3e8b312a6bad7ca0a831", "f": ["*", "admin"], "n": "admin"},
+{"h": "c7810c4bc2dfa6c419220d80389fe89678ce8e414215d5942a3dd7322ba475b6", "f": ["*"], "n": "abonné"}];
+const licNorm=s=>String(s||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+const licFmt=n=>n.replace(/(.{4})(?=.)/g,'$1-');
+function licFind(k){const n=licNorm(k);if(n.length!==16)return null;const h=sha256(LIC_SALT+n);return LIC.find(e=>e.h===h)||null;}
+let licEntry=null,licMsg='',keyOpen=false,keyWhy=false;
+function licLoad(){try{const k=localStorage.getItem('registre-cle');licEntry=k?licFind(k):null;if(k&&!licEntry)localStorage.removeItem('registre-cle');}catch(e){licEntry=null;}}
+const lic=f=>!!(licEntry&&(licEntry.f.includes('*')||licEntry.f.includes(f)));
+function licSet(k){const e=licFind(k);if(!e)return false;licEntry=e;try{localStorage.setItem('registre-cle',licNorm(k));}catch(_){}return true;}
+function licClear(){licEntry=null;try{localStorage.removeItem('registre-cle');}catch(_){}}
+const SVGK=p=>`<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+const LOCKI=SVGK('<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>');
+const KEYI=SVGK('<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>');
+function renderKeyBtn(){
+  const c=$('#cdxbtn'),k=$('#keybtn');
+  c.innerHTML='<span>'+tr('cdx')+'</span>';c.title=tr('cdxT');
+  k.innerHTML=KEYI;k.title=tr('keyT');k.setAttribute('aria-label',tr('keyT'));k.classList.toggle('on',!!licEntry);
+}
+function renderKeyDlg(){
+  const o=$('#keydlg');if(!keyOpen){o.hidden=true;o.innerHTML='';return;}
+  o.hidden=false;
+  const head=`<div class="pt"><b>${tr('keyT')}</b><button class="x" data-keyclose aria-label="${tr('close')}">${XI}</button></div>`;
+  if(licEntry){
+    const names=licEntry.f.includes('*')?tr('f_all'):licEntry.f.map(f=>tr('f_'+f)).join(', ');
+    o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p><b>${tr('keyOn')}</b>${licEntry.n?' ('+esc(licEntry.n)+')':''}</p><p>${tr('keyFeat')}${names}</p><div class="dbtns"><button class="btn" data-keyrm>${tr('keyRm')}</button><button class="btn" data-keyclose>${tr('close')}</button></div></div>`;
+    return;
+  }
+  o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p>${keyWhy===true?tr('keyLock'):keyWhy==='item'?tr('keyItem'):keyWhy==='unit'?tr('keyUnit'):tr('keyD')}</p><input class="q" id="keyin" type="text" inputmode="text" maxlength="19" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" style="margin-top:10px;width:100%;max-width:none;box-sizing:border-box;font-family:monospace;font-size:16px;letter-spacing:.08em"><p class="kmsg">${licMsg}</p><div class="dbtns"><button class="btn" data-keyok>${tr('keyOk')}</button></div></div>`;
+  const i=$('#keyin');if(i)i.focus();
+}
+function keyOpenDlg(why){keyOpen=true;keyWhy=why||false;licMsg='';renderKeyDlg();}
+function keySubmit(){
+  const i=$('#keyin');if(!i)return;const n=licNorm(i.value);
+  if(n.length!==16){licMsg=tr('keyFmt');renderKeyDlg();$('#keyin').value=licFmt(n);return;}
+  if(licSet(n)){licMsg='';keyOpen=false;renderKeyDlg();licRefresh();keyOpen=true;renderKeyDlg();return;}
+  licMsg=tr('keyBad');renderKeyDlg();$('#keyin').value=licFmt(n);
+}
+const FREE_H=new Set(['Assassin','Chevalier','Lancier','Archer','Soldat','Soldat lourd','Médecin','Sniper']);
+const FREE_E=new Set(['soin','armure','contact','banniere']);
+const profFree=p=>!!p&&p.type==='Héros'&&FREE_H.has(p.name);
+const eqFree=s=>!s||FREE_E.has(String(s).split(':')[0]);
+const full=()=>lic('*');
+const unitFree=u=>{const p=prof(u);return profFree(p)&&(u.eq||[]).every(eqFree);};
+const roUnit=u=>!!u&&!full()&&!unitFree(u);
+function licRefresh(){renderKeyBtn();renderCdx();const u=cur();if(pk&&u)pk=Object.assign({key:pk.key},pickData(pk.key,u));renderPick();renderDD();renderU();card();}
+licLoad();
 function applyLang(){
   document.documentElement.lang=lang;document.title=tr('title').replace(/[’']/g,' ')+' '+appV();
   $('#h1').textContent=tr('title');$('#fan').textContent=tr('fan');$('#intro').textContent=tr('intro');
   $('#q').placeholder=tr('search');$('#q').setAttribute('aria-label',tr('search'));
   $('#sidet').textContent=tr('filtT');$('#sidex').innerHTML=XI;$('#sidex').setAttribute('aria-label',tr('close'));$('#fbtn').title=tr('filters');$('#fbtn').setAttribute('aria-label',tr('filters'));
   $('#implab').textContent=tr('imp');$('#implbl').title=tr('impTitle');
-  $('#cdxbtn').textContent=tr('cdx');$('#cdxbtn').title=tr('cdxT');renderCdx();
+  renderKeyBtn();renderCdx();
   $('#ver2').textContent=tr('ver2');$('#credit').textContent=tr('credit');
   renderLG();buildFP();all();
 }
 
 document.addEventListener('click',e=>{
   const t=e.target,g=s=>t.closest(s);let b;
+  if(selId&&g('#ov .cw.ro')&&g('[data-pick],[data-chef],[data-reset],[data-creset],[data-cimg],.up label,.up button')){e.preventDefault();keyOpenDlg('unit');return;}
   if(t.id==='pv'||g('[data-pclose]')){closePick();return;}
   if(b=g('[data-pv]')){choose(+b.dataset.pv);return;}
   if(b=g('[data-wpn]')){wPin=wPin===b.dataset.wpn?null:b.dataset.wpn;document.querySelectorAll('.wpw').forEach(x=>x.classList.toggle('pin',x.dataset.wpn===wPin));return;}
@@ -1043,6 +1114,11 @@ document.addEventListener('click',e=>{
   if(!g('#dd')&&open){open=false;adding=false;recolor=null;renderDD();}
   if(!g('#cdxdd')&&cdxMenu){cdxMenu=false;renderCdxMenu();}
   if(g('#cdxbtn')){cdxMenu=!cdxMenu;if(cdxMenu&&lgOpen){lgOpen=false;renderLG();}renderCdxMenu();return;}
+  if(g('#keybtn')){keyOpenDlg(false);return;}
+  if(g('[data-keyclose]')||t.id==='keydlg'){keyOpen=false;renderKeyDlg();return;}
+  if(g('[data-keyok]')){keySubmit();return;}
+  if(g('[data-keyrm]')){licClear();licMsg='';renderKeyDlg();licRefresh();return;}
+  if(g('[data-keyopen]')){keyOpenDlg(false);return;}
   if(b=g('[data-cdxk]')){cdxK=b.dataset.cdxk;cdxMenu=false;renderCdxMenu();cdxOpen=true;cdxQ='';cdxBig=null;cdxW=null;cdxTab='e';renderCdx();return;}
   if(g('[data-cdxclose]')||t.id==='cdx'){cdxOpen=false;renderCdx();return;}
   if(g('[data-cdxvclose]')||(g('[data-cdxv]')&&!g('.cdxa'))){cdxBig=null;cdxW=null;renderCdx();return;}
@@ -1077,10 +1153,13 @@ document.addEventListener('click',e=>{
   if(g('[data-creset]')){delete customC[selId];saveImgs();card();return;}
   if(g('[data-reset]')){delete custom[selId];saveImgs();card();renderU();}
 });
+document.addEventListener('input',e=>{const t=e.target;if(t&&t.id==='keyin'){t.value=licFmt(licNorm(t.value).slice(0,16));}});
 document.addEventListener('keydown',e=>{
   if(e.target.id==='newarmy'&&e.key==='Enter'){e.preventDefault();createArmy();}
   else if(e.target.id==='newunit'&&e.key==='Enter'){e.preventDefault();createUnit();}
+  else if(e.target.id==='keyin'&&e.key==='Enter'){e.preventDefault();keySubmit();}
   else if(e.key==='Escape'){
+    if(keyOpen){keyOpen=false;renderKeyDlg();return;}
     if(fopen&&!cdxOpen&&!pk&&!selId){fopen=false;setTimeout(endSide,330);$('#side').classList.remove('open');document.body.classList.remove('sideopen');renderU();$('#fbtn').setAttribute('aria-expanded',false);}else if(cdxOpen){if(cdxBig){cdxBig=null;}else cdxOpen=false;renderCdx();}else if(dq){dq=null;renderDlg();}else if(pk)closePick();else if(selId)closeCard();
     else if(lgOpen){lgOpen=false;renderLG();}
     else if(open){open=false;adding=false;recolor=null;renderDD();$('#ddbtn').focus();}}
