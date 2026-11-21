@@ -87,6 +87,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,label:focus-within
 .pn.hero{color:#FFD24A}
 .pn.mega{color:#00A7BB}
 .dbtns{display:grid;gap:8px;margin-top:12px}.dbtns .btn{white-space:normal;text-align:left}.dbtns .dng{background:#a30f1f;color:#fff;border-color:transparent}#dlg p{margin:10px 0 0}
+.dbtns .keyrm{color:#ff6b6b;border-color:#ff6b6b}.dbtns .keyrm:hover{background:rgba(255,107,107,.12)}
 .rbtn{display:inline-flex;align-items:center;gap:6px}.rbtn[aria-checked=true]{background:var(--gold,#c9a227);color:#000;border-color:transparent}.sw2{font:700 10px/1 system-ui;padding:2px 5px;border-radius:8px;background:rgba(0,0,0,.25);color:inherit}
 .binder.reorg .pk{cursor:grab;outline:2px dashed var(--gold,#c9a227);outline-offset:2px;border-radius:12px}.binder.reorg .pdel,.binder.reorg .addp,.binder.reorg .addin{display:none}.binder.reorg .pkb{pointer-events:none}.binder.reorg .pk{touch-action:none}
 .pk{user-select:none;-webkit-user-select:none}.pk img{-webkit-user-drag:none}
@@ -1075,7 +1076,7 @@ function renderKeyDlg(){
   const head=`<div class="pt"><b>${tr('keyT')}</b><button class="x" data-keyclose aria-label="${tr('close')}">${XI}</button></div>`;
   if(licEntry){
     const names=licEntry.f.includes('*')?tr('f_all'):licEntry.f.map(f=>tr('f_'+f)).join(', ');
-    o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p><b>${tr('keyOn')}</b>${licEntry.n?' ('+esc(licEntry.n)+')':''}</p><p>${tr('keyFeat')}${names}</p><div class="dbtns"><button class="btn" data-keyrm>${tr('keyRm')}</button><button class="btn" data-keyclose>${tr('close')}</button></div></div>`;
+    o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p><b>${tr('keyOn')}</b>${licEntry.n?' ('+esc(licEntry.n)+')':''}</p><p>${tr('keyFeat')}${names}</p><div class="dbtns"><button class="btn keyrm" data-keyrm>${tr('keyRm')}</button><button class="btn" data-keyclose>${tr('close')}</button></div></div>`;
     return;
   }
   o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p>${keyWhy===true?tr('keyLock'):keyWhy==='item'?tr('keyItem'):keyWhy==='unit'?tr('keyUnit'):tr('keyD')}</p><input class="q" id="keyin" type="text" inputmode="text" maxlength="19" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" style="margin-top:10px;width:100%;max-width:none;box-sizing:border-box;font-family:monospace;font-size:16px;letter-spacing:.08em"><p class="kmsg">${licMsg}</p><div class="dbtns"><button class="btn" data-keyok>${tr('keyOk')}</button></div></div>`;
