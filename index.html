@@ -1076,7 +1076,7 @@ function renderKeyDlg(){
   const head=`<div class="pt"><b>${tr('keyT')}</b><button class="x" data-keyclose aria-label="${tr('close')}">${XI}</button></div>`;
   if(licEntry){
     const names=licEntry.f.includes('*')?tr('f_all'):licEntry.f.map(f=>tr('f_'+f)).join(', ');
-    o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p><b>${tr('keyOn')}</b>${licEntry.n?' ('+esc(licEntry.n)+')':''}</p><p>${tr('keyFeat')}${names}</p><div class="dbtns"><button class="btn keyrm" data-keyrm>${tr('keyRm')}</button><button class="btn" data-keyclose>${tr('close')}</button></div></div>`;
+    o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p><b>${tr('keyOn')}</b>${licEntry.n?' ('+esc(licEntry.n)+')':''}</p><div class="dbtns"><button class="btn keyrm" data-keyrm>${tr('keyRm')}</button><button class="btn" data-keyclose>${tr('close')}</button></div></div>`;
     return;
   }
   o.innerHTML=`<div class="pp" role="dialog" aria-modal="true" aria-label="${tr('keyT')}">${head}<p>${keyWhy===true?tr('keyLock'):keyWhy==='item'?tr('keyItem'):keyWhy==='unit'?tr('keyUnit'):tr('keyD')}</p><input class="q" id="keyin" type="text" inputmode="text" maxlength="19" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off" autocapitalize="characters" spellcheck="false" style="margin-top:10px;width:100%;max-width:none;box-sizing:border-box;font-family:monospace;font-size:16px;letter-spacing:.08em"><p class="kmsg">${licMsg}</p><div class="dbtns"><button class="btn" data-keyok>${tr('keyOk')}</button></div></div>`;
