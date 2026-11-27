@@ -94,7 +94,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,label:focus-within
 .pim img.pchef{inset:auto;top:3px;left:3px;width:22%;max-width:24px;height:auto;object-fit:contain}
 .eqb{display:flex;height:8px}.eqb i{flex:1;display:block}
 .eqb.eqp.mg{height:auto;min-height:clamp(20px,2.3vw,30px);flex-wrap:wrap;row-gap:3px}.eqb.eqp.mg img{height:clamp(14px,1.7vw,22px);max-width:31%}.eqb.eqp.mg i.em{height:clamp(14px,1.7vw,22px)}
-.eqb.mh{height:clamp(20px,2.3vw,30px)}.eqb.eqp{height:clamp(20px,2.3vw,30px);align-items:center;justify-content:center;gap:clamp(3px,.5vw,8px);padding:3px 4px;background:rgba(0,0,0,.18)}.eqb.eqp img{height:100%;width:auto;max-width:31%;object-fit:contain;flex:none}.eqb.eqp .eqcm{position:relative;display:block;height:100%;flex:none;margin-left:5px}.eqp .eqcm img{max-width:none}.eqp .eqcm b{position:absolute;left:3px;top:-5px;min-width:11px;height:11px;padding:0 1px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#95C703;color:#000;border:1px solid #000;border-radius:2px;font:700 8px/1 system-ui,sans-serif}
+.eqb.mh{height:clamp(20px,2.3vw,30px)}.eqb.eqp{height:clamp(20px,2.3vw,30px);align-items:center;justify-content:center;gap:clamp(3px,.5vw,8px);padding:3px 4px;background:rgba(0,0,0,.18)}.eqb.eqp img{height:100%;width:auto;max-width:31%;object-fit:contain;flex:none}.eqb.eqp .eqcm{position:relative;display:block;height:100%;flex:none;margin-left:5px}.eqp .eqcm img{max-width:none}.eqp .eqcm .star{left:2px;top:-4px;width:12px;height:12px;max-width:none;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}.eqp .eqcm b{position:absolute;left:3px;top:-5px;min-width:11px;height:11px;padding:0 1px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#95C703;color:#000;border:1px solid #000;border-radius:2px;font:700 8px/1 system-ui,sans-serif}
 .eqp .eqov{position:relative;display:block;height:100%;aspect-ratio:1.42;flex:none;margin-left:6px}.eqb.eqp .eqov img{height:100%;width:100%;max-width:none;object-fit:contain;display:block}.eqb.eqp .eqov img.ovt{position:absolute;left:-14%;top:-10%;height:68%;width:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}.eqb.eqp i.em{flex:none;height:62%;aspect-ratio:1.45;border:1px dashed rgba(128,128,128,.55);border-radius:3px;opacity:.7}
 .pkb small{display:flex;align-items:center;justify-content:center;gap:4px;padding:4px 4px 6px;color:var(--mute);font-size:clamp(8px,.95vw,12px);line-height:1.25}
 .pdel,.x{display:grid;place-items:center;padding:0}
@@ -396,7 +396,7 @@ const en_=e=>lang==='en'?e.en:e.n;
 const vn=(e,v)=>(lang==='en'?e.ve[e.v.indexOf(v)]:v).toLowerCase();
 const COMP={gardien:['Gardien','Guardian'],protecteur:['Protecteur','Protector']};const compName=k=>COMP[k][lang==='en'?1:0];
 const HEART='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5.2-8-11a4.6 4.6 0 0 1 8-3 4.6 4.6 0 0 1 8 3c0 5.8-8 11-8 11z" fill="#D2041A" stroke="#7a0010" stroke-width="1.2"/></svg>';
-const STAR='<svg class="star" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2l3 6.5 7 .9-5.2 4.8 1.4 7L12 17.8 5.8 21.2l1.4-7L2 9.4l7-.9z" fill="#FFD700" stroke="#b45f06" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+const STAR='<svg class="star" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 2l2.8 7.2L22 12l-7.2 2.8L12 22l-2.8-7.2L2 12l7.2-2.8z" fill="#FFD700" stroke="#b45f06" stroke-width="1.2" stroke-linejoin="round"/></svg>';
 let armies=[];
 // Unité : army, n = nom, t = Troupe ou Héros, p = profil, eq = 3 équipements
 let units=[];
@@ -574,6 +574,7 @@ function eqPic(s,u){
   const [id,v]=String(s||'').split(':'),e=eqOf(s);
   const k=(EPIC[id]&&EPIC[id][v])||eqKey(id);
   if(!e||!GI[k])return '<i class="em"></i>';
+  if(id==='capitaine'&&GI[k])return `<span class="eqcm" title="${esc(en_(e))}"><img src="${GI[k]}" alt="">${STAR.replace('width="16" height="16"','width="12" height="12"')}</span>`;
   if(id==='compagnon'&&u&&u.comp)return `<span class="eqcm" title="${esc(en_(e)+', '+compName(u.comp.t))}"><img src="${GI[k]}" alt=""><b>${esc(compName(u.comp.t).charAt(0))}</b></span>`;
   const t=esc(en_(e)+(v?', '+vn(e,v):''));
   if(EPIC[id]&&EPIC[id][v]&&GI[EPIC[id][v]]&&GI['q_'+id])return `<span class="eqov" title="${t}"><img src="${GI['q_'+id]}" alt=""><img class="ovt" src="${GI[EPIC[id][v]]}" alt=""></span>`;
